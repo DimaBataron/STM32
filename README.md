@@ -12,3 +12,5 @@ vid15 LoRa sx1276, HAL, STM32F103
 vid16 LoRa Rx Tx
 
 vid17 RTC, HAL
+
+vid18 Сравнение нейросетей ChatGPT, Copilot, Gemini
