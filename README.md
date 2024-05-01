@@ -14,3 +14,5 @@ vid16 LoRa Rx Tx
 vid17 RTC, HAL
 
 vid18 Сравнение нейросетей ChatGPT, Copilot, Gemini
+
+vid19 Меню на дисплей c последующей записью в структуру LoRa
