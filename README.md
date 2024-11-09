@@ -25,3 +25,5 @@ vid22 Реализация приемника/передатчика, замер
 
 vid23 keypad "Леший" на TCA8418. PCB на 21 кнопку и 1 тумблер.
 
+vid 25 The video contains all the data you need to make or buy low-capacity probes. I plan to use such probes to calculate the reliability of the quartz resonator
+
