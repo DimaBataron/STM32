@@ -28,3 +28,5 @@ vid23 keypad "Леший" на TCA8418. PCB на 21 кнопку и 1 тумбл
 vid25 The video contains all the data you need to make or buy low-capacity probes. I plan to use such probes to calculate the reliability of the quartz resonator
 
 vid26 Checking the compatibility of the selected quartz resonator with STM32
+
+vid27 Developing your own LoRa module
