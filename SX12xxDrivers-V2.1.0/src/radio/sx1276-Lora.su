@@ -1,0 +1,7 @@
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276-Lora.c:125:6:SX1276LoRaInit	8	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276-Lora.c:184:6:SX1276LoRaSetDefaults	8	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276-Lora.c:191:6:SX1276LoRaSetRFState	16	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276-Lora.c:196:6:SX1276LoRaGetRxPacket	16	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276-Lora.c:203:6:SX1276LoRaSetTxPacket	16	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276-Lora.c:211:10:SX1276LoRaProcess	24	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276-Lora.c:554:9:SX1276LoRaReadRxGain	8	static

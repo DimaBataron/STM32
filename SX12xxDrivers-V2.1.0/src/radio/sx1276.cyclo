@@ -1,0 +1,8 @@
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276.c:14:6:SX1276Init	1
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276.c:29:6:SX1276Reset	1
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276.c:40:6:SX1276SetLoRaOn	2
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276.c:80:6:SX1276LoRaSetOpMode	4
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276.c:112:6:SX1276StartRx	1
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276.c:126:6:SX1276GetRxPacket	1
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276.c:140:6:SX1276SetTxPacket	1
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/radio/sx1276.c:153:6:RXTX	2

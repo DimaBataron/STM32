@@ -1,0 +1,7 @@
+../SX12xxDrivers-V2.1.0/src/radio/sx1276.c:14:6:SX1276Init	8	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276.c:29:6:SX1276Reset	8	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276.c:40:6:SX1276SetLoRaOn	16	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276.c:80:6:SX1276LoRaSetOpMode	24	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276.c:113:6:SX1276StartRx	8	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276.c:127:6:SX1276GetRxPacket	16	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276.c:141:6:SX1276SetTxPacket	16	static

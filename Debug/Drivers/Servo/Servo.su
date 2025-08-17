@@ -1,0 +1,2 @@
+../Drivers/Servo/Servo.c:24:6:ServoStartInit	16	static
+../Drivers/Servo/Servo.c:53:6:SteeringWheel	32	static

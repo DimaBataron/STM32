@@ -1,0 +1,13 @@
+../SX12xxDrivers-V2.1.0/src/radio/sx1276-LoRaMisk.c:17:6:SX1276LoRaSetRFFrequency	16	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276-LoRaMisk.c:28:6:SX1276LoRaSetSpreadingFactor	16	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276-LoRaMisk.c:55:6:SX1276LoRaSetNbTrigPeaks	16	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276-LoRaMisk.c:62:6:SX1276LoRaSetErrorCoding	16	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276-LoRaMisk.c:70:6:SX1276LoRaSetPacketCrcOn	16	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276-LoRaMisk.c:78:6:SX1276LoRaSetSignalBandwidth	16	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276-LoRaMisk.c:86:6:SX1276LoRaSetImplicitHeaderOn	16	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276-LoRaMisk.c:94:6:SX1276LoRaSetSymbTimeout	16	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276-LoRaMisk.c:103:6:SX1276LoRaSetPayloadLength	16	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276-LoRaMisk.c:110:6:SX1276LoRaSetLowDatarateOptimize	16	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276-LoRaMisk.c:117:6:SX1276LoRaSetPAOutput	16	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276-LoRaMisk.c:124:6:SX1276LoRaSetPa20dBm	16	static
+../SX12xxDrivers-V2.1.0/src/radio/sx1276-LoRaMisk.c:143:6:SX1276LoRaSetRFPower	16	static
