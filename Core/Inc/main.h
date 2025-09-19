@@ -36,6 +36,8 @@ extern "C" {
 #include "SX1276_Start.h"
 #include "ChaeburatorIT_Proc.h"
 #include "cmsis_os.h"
+#include "UART_Outpt.h"
+#include "ADC_LoadCell.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -44,7 +46,18 @@ extern "C" {
 #define Ra_02_AI_Thinker
 
 extern SPI_HandleTypeDef hspi1;
+
 extern osSemaphoreId SemDMA_LoRaHandle;
+extern osSemaphoreId SemDMA_UARTHandle;
+extern osSemaphoreId Sem_Time_RxErrHandle;
+extern osSemaphoreId SemDMA_VoltMeasHandle;
+extern osSemaphoreId SemControlTaskHandle;
+
+extern osThreadId LightSignalHandle;
+extern osThreadId SoundAlarmHandle;
+
+extern UART_HandleTypeDef huart1;
+extern ADC_HandleTypeDef hadc1;
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/
@@ -81,6 +94,8 @@ void Error_Handler(void);
 #define M3_PWM_GPIO_Port GPIOA
 #define M4_PWM_Pin GPIO_PIN_3
 #define M4_PWM_GPIO_Port GPIOA
+#define P_CONTROL_Pin GPIO_PIN_5
+#define P_CONTROL_GPIO_Port GPIOA
 #define Servo1_Pin GPIO_PIN_6
 #define Servo1_GPIO_Port GPIOA
 #define Servo2_Pin GPIO_PIN_7
@@ -95,6 +110,16 @@ void Error_Handler(void);
 #define M4_IN2_GPIO_Port GPIOB
 #define STBY_M3_M4_Pin GPIO_PIN_13
 #define STBY_M3_M4_GPIO_Port GPIOB
+#define BOOZER_Pin GPIO_PIN_14
+#define BOOZER_GPIO_Port GPIOB
+#define LIGHT2_Pin GPIO_PIN_15
+#define LIGHT2_GPIO_Port GPIOB
+#define LIGHT1_Pin GPIO_PIN_8
+#define LIGHT1_GPIO_Port GPIOA
+#define LOAD2_Pin GPIO_PIN_11
+#define LOAD2_GPIO_Port GPIOA
+#define LOAD1_Pin GPIO_PIN_12
+#define LOAD1_GPIO_Port GPIOA
 #define NSS_Pin GPIO_PIN_15
 #define NSS_GPIO_Port GPIOA
 #define Reset_Pin GPIO_PIN_6

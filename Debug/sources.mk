@@ -22,6 +22,7 @@ C_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
+ADC_LoadCell \
 ChaeburatorIT_Proc \
 Core/Src \
 Core/Startup \
@@ -34,4 +35,5 @@ Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3 \
 Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang \
 SX12xxDrivers-V2.1.0/src/RxTx \
 SX12xxDrivers-V2.1.0/src/radio \
+UART_Output \
 

@@ -25,7 +25,7 @@ void Brushed2DC_Control(TIM_HandleTypeDef *htim1,uint32_t Channel1, \
 	if(Channel1 == TIM_CHANNEL_1){
 		HAL_GPIO_WritePin(STBY_M1_M2_GPIO_Port, STBY_M1_M2_Pin, GPIO_PIN_SET);
 		//вращение по часовой стрелке.
-		if(DirectRot1 == DirectRotCW){
+		if(DirectRot1 == DirectRotCW){ // тогда DirectRot2 == DirectRotCCW
 			//задний ход
 			if(accelPWM<0){
 				HAL_GPIO_WritePin(M1_IN1_GPIO_Port, M1_IN1_Pin, GPIO_PIN_RESET);

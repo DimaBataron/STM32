@@ -1,0 +1,5 @@
+../UART_Output/UART_Output.c:16:14:TransArrayLayout	88	static
+../UART_Output/UART_Output.c:76:14:MemReqString	32	static
+../UART_Output/UART_Output.c:90:10:MemCpyStr	24	static
+../UART_Output/UART_Output.c:102:6:OutStringTask	16	static
+../UART_Output/UART_Output.c:120:6:HAL_UART_TxCpltCallback	24	static,ignoring_inline_asm

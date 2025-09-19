@@ -136,13 +136,13 @@ uint32_t RxContLoRaCmpl(uint8_t *Arr,SPI_HandleTypeDef *hspi){
 	SX1276Write( REG_LR_IRQFLAGS, RFLR_IRQFLAGS_RXDONE  );
 	SX1276Read( REG_LR_IRQFLAGS, &SX1276LR->RegIrqFlags );
 	if( ( SX1276LR->RegIrqFlags & RFLR_IRQFLAGS_PAYLOADCRCERROR ) == RFLR_IRQFLAGS_PAYLOADCRCERROR ){
-//		PayLoadCRCError++; // corrupted CRC
+		PayLoadCRCError++; // corrupted CRC
 		SX1276Write( REG_LR_IRQFLAGS, RFLR_IRQFLAGS_PAYLOADCRCERROR  );
 		SX1276LoRaSetOpMode( RFLR_OPMODE_RECEIVER );
 		//If the package is corrupted do nothing
 		return HAL_ERROR;
 	}
-//	NumSuccessPack++;
+	NumSuccessPack++;
 //	SX1276Read( REG_LR_PKTSNRVALUE, &SX1276LR->RegPktSnrValue );
 //	SX1276Read( REG_LR_PKTRSSIVALUE, &SX1276LR->RegPktRssiValue );
 	//???

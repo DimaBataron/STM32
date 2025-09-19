@@ -13,6 +13,11 @@
   * in the root directory of this software component.
   * If no LICENSE file comes with this software, it is provided AS-IS.
   *
+  *
+  * Don't forget to comment   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+  * IN MX_GPIO_Init()  so as not to disrupt the logic of the work.
+  *
+  * There is not enough memory for output to UART
   ******************************************************************************
   */
 /* USER CODE END Header */
@@ -41,18 +46,33 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+ADC_HandleTypeDef hadc1;
+DMA_HandleTypeDef hdma_adc1;
+
 SPI_HandleTypeDef hspi1;
 
+TIM_HandleTypeDef htim1;
 TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 
 UART_HandleTypeDef huart1;
+DMA_HandleTypeDef hdma_usart1_tx;
 
 osThreadId ServoHandle;
 osThreadId Servo2Handle;
 osThreadId EngineTestHandle;
 osThreadId LoRaRxHandle;
+osThreadId OutUartHandle;
+osThreadId RxErrorHandle;
+osThreadId VoltMeasHandle;
+osThreadId LightSignalHandle;
+osThreadId SoundAlarmHandle;
+osThreadId ControlTaskHandle;
 osSemaphoreId SemDMA_LoRaHandle;
+osSemaphoreId SemDMA_UARTHandle;
+osSemaphoreId Sem_Time_RxErrHandle;
+osSemaphoreId SemDMA_VoltMeasHandle;
+osSemaphoreId SemControlTaskHandle;
 /* USER CODE BEGIN PV */
 
 /* USER CODE END PV */
@@ -60,14 +80,23 @@ osSemaphoreId SemDMA_LoRaHandle;
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_DMA_Init(void);
 static void MX_TIM3_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_USART1_UART_Init(void);
+static void MX_TIM1_Init(void);
+static void MX_ADC1_Init(void);
 void StartServo(void const * argument);
 void StartServo2(void const * argument);
 void StartEngineTest(void const * argument);
 void StartLoRaRx(void const * argument);
+void StartOutUart(void const * argument);
+void StartRxError(void const * argument);
+void StartVoltMeas(void const * argument);
+void StartLightSignal(void const * argument);
+void StartSoundAlarm(void const * argument);
+void StartControlTask(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -102,16 +131,19 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
-  osSemaphoreDef(SemDMA_LoRa);
-  SemDMA_LoRaHandle = osSemaphoreCreate(osSemaphore(SemDMA_LoRa), 1);
+//  osSemaphoreDef(SemDMA_LoRa);
+//  SemDMA_LoRaHandle = osSemaphoreCreate(osSemaphore(SemDMA_LoRa), 1);
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_DMA_Init();
   MX_TIM3_Init();
   MX_TIM2_Init();
   MX_SPI1_Init();
   MX_USART1_UART_Init();
+  MX_TIM1_Init();
+  MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 
   /* USER CODE END 2 */
@@ -122,9 +154,29 @@ int main(void)
 
   /* Create the semaphores(s) */
   /* definition and creation of SemDMA_LoRa */
+  osSemaphoreDef(SemDMA_LoRa);
+  SemDMA_LoRaHandle = osSemaphoreCreate(osSemaphore(SemDMA_LoRa), 1);
+
+  /* definition and creation of SemDMA_UART */
+  osSemaphoreDef(SemDMA_UART);
+  SemDMA_UARTHandle = osSemaphoreCreate(osSemaphore(SemDMA_UART), 1);
+
+  /* definition and creation of Sem_Time_RxErr */
+  osSemaphoreDef(Sem_Time_RxErr);
+  Sem_Time_RxErrHandle = osSemaphoreCreate(osSemaphore(Sem_Time_RxErr), 1);
+
+  /* definition and creation of SemDMA_VoltMeas */
+  osSemaphoreDef(SemDMA_VoltMeas);
+  SemDMA_VoltMeasHandle = osSemaphoreCreate(osSemaphore(SemDMA_VoltMeas), 1);
+
+  /* definition and creation of SemControlTask */
+  osSemaphoreDef(SemControlTask);
+  SemControlTaskHandle = osSemaphoreCreate(osSemaphore(SemControlTask), 1);
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
+  osSemaphoreWait(SemControlTaskHandle, 0);
+  osSemaphoreWait(SemDMA_VoltMeasHandle, 0);
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
@@ -137,20 +189,44 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of Servo */
-//  osThreadDef(Servo, StartServo, osPriorityLow, 0, 150);
-//  ServoHandle = osThreadCreate(osThread(Servo), NULL);
-//
-//  /* definition and creation of Servo2 */
-//  osThreadDef(Servo2, StartServo2, osPriorityBelowNormal, 0, 150);
-//  Servo2Handle = osThreadCreate(osThread(Servo2), NULL);
-//
-//  /* definition and creation of EngineTest */
-//  osThreadDef(EngineTest, StartEngineTest, osPriorityNormal, 0, 150);
-//  EngineTestHandle = osThreadCreate(osThread(EngineTest), NULL);
+  osThreadDef(Servo, StartServo, osPriorityLow, 0, 150);
+  ServoHandle = osThreadCreate(osThread(Servo), NULL);
+
+  /* definition and creation of Servo2 */
+  osThreadDef(Servo2, StartServo2, osPriorityLow, 0, 150);
+  Servo2Handle = osThreadCreate(osThread(Servo2), NULL);
+
+  /* definition and creation of EngineTest */
+  osThreadDef(EngineTest, StartEngineTest, osPriorityBelowNormal, 0, 150);
+  EngineTestHandle = osThreadCreate(osThread(EngineTest), NULL);
 
   /* definition and creation of LoRaRx */
   osThreadDef(LoRaRx, StartLoRaRx, osPriorityAboveNormal, 0, 300);
   LoRaRxHandle = osThreadCreate(osThread(LoRaRx), NULL);
+
+  /* definition and creation of OutUart */
+//  osThreadDef(OutUart, StartOutUart, osPriorityLow, 0, 512);
+//  OutUartHandle = osThreadCreate(osThread(OutUart), NULL);
+
+  /* definition and creation of RxError */
+  osThreadDef(RxError, StartRxError, osPriorityNormal, 0, 300);
+  RxErrorHandle = osThreadCreate(osThread(RxError), NULL);
+
+  /* definition and creation of VoltMeas */
+  osThreadDef(VoltMeas, StartVoltMeas, osPriorityLow, 0, 256);
+  VoltMeasHandle = osThreadCreate(osThread(VoltMeas), NULL);
+
+  /* definition and creation of LightSignal */
+  osThreadDef(LightSignal, StartLightSignal, osPriorityLow, 0, 128);
+  LightSignalHandle = osThreadCreate(osThread(LightSignal), NULL);
+
+  /* definition and creation of SoundAlarm */
+  osThreadDef(SoundAlarm, StartSoundAlarm, osPriorityLow, 0, 128);
+  SoundAlarmHandle = osThreadCreate(osThread(SoundAlarm), NULL);
+
+  /* definition and creation of ControlTask */
+  osThreadDef(ControlTask, StartControlTask, osPriorityHigh, 0, 200);
+  ControlTaskHandle = osThreadCreate(osThread(ControlTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -180,6 +256,7 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -209,6 +286,67 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_ADC;
+  PeriphClkInit.AdcClockSelection = RCC_ADCPCLK2_DIV6;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+/**
+  * @brief ADC1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_ADC1_Init(void)
+{
+
+  /* USER CODE BEGIN ADC1_Init 0 */
+
+  /* USER CODE END ADC1_Init 0 */
+
+  ADC_ChannelConfTypeDef sConfig = {0};
+
+  /* USER CODE BEGIN ADC1_Init 1 */
+
+  /* USER CODE END ADC1_Init 1 */
+
+  /** Common config
+  */
+  hadc1.Instance = ADC1;
+  hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
+  hadc1.Init.ContinuousConvMode = ENABLE;
+  hadc1.Init.DiscontinuousConvMode = DISABLE;
+  hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc1.Init.NbrOfConversion = 2;
+  if (HAL_ADC_Init(&hadc1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_4;
+  sConfig.Rank = ADC_REGULAR_RANK_1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_55CYCLES_5;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Regular Channel
+  */
+  sConfig.Rank = ADC_REGULAR_RANK_2;
+  if (HAL_ADC_ConfigChannel(&hadc1, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN ADC1_Init 2 */
+
+  /* USER CODE END ADC1_Init 2 */
+
 }
 
 /**
@@ -246,6 +384,52 @@ static void MX_SPI1_Init(void)
   /* USER CODE BEGIN SPI1_Init 2 */
 
   /* USER CODE END SPI1_Init 2 */
+
+}
+
+/**
+  * @brief TIM1 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_TIM1_Init(void)
+{
+
+  /* USER CODE BEGIN TIM1_Init 0 */
+
+  /* USER CODE END TIM1_Init 0 */
+
+  TIM_ClockConfigTypeDef sClockSourceConfig = {0};
+  TIM_MasterConfigTypeDef sMasterConfig = {0};
+
+  /* USER CODE BEGIN TIM1_Init 1 */
+
+  /* USER CODE END TIM1_Init 1 */
+  htim1.Instance = TIM1;
+  htim1.Init.Prescaler = 9999;
+  htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim1.Init.Period = 7199;
+  htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim1.Init.RepetitionCounter = 0;
+  htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+  if (HAL_TIM_Base_Init(&htim1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sClockSourceConfig.ClockSource = TIM_CLOCKSOURCE_INTERNAL;
+  if (HAL_TIM_ConfigClockSource(&htim1, &sClockSourceConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  if (HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN TIM1_Init 2 */
+
+  /* USER CODE END TIM1_Init 2 */
 
 }
 
@@ -379,10 +563,10 @@ static void MX_USART1_UART_Init(void)
 
   /* USER CODE END USART1_Init 1 */
   huart1.Instance = USART1;
-  huart1.Init.BaudRate = 115200;
-  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.BaudRate = 9600;
+  huart1.Init.WordLength = UART_WORDLENGTH_9B;
   huart1.Init.StopBits = UART_STOPBITS_1;
-  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Parity = UART_PARITY_ODD;
   huart1.Init.Mode = UART_MODE_TX_RX;
   huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
   huart1.Init.OverSampling = UART_OVERSAMPLING_16;
@@ -393,6 +577,25 @@ static void MX_USART1_UART_Init(void)
   /* USER CODE BEGIN USART1_Init 2 */
 
   /* USER CODE END USART1_Init 2 */
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Channel1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 5, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
+  /* DMA1_Channel4_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel4_IRQn, 6, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel4_IRQn);
 
 }
 
@@ -417,11 +620,18 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOC, M2_IN1_Pin|M1_IN1_Pin|M1_IN2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, M3_IN2_Pin|M3_IN1_Pin|M4_IN1_Pin|M4_IN2_Pin
-                          |STBY_M3_M4_Pin|Reset_Pin|STBY_M1_M2_Pin|M2_IN2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, P_CONTROL_Pin|LOAD2_Pin|LOAD1_Pin|NSS_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(NSS_GPIO_Port, NSS_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, M3_IN2_Pin|M3_IN1_Pin|M4_IN1_Pin|M4_IN2_Pin
+                          |STBY_M3_M4_Pin|BOOZER_Pin|Reset_Pin|STBY_M1_M2_Pin
+                          |M2_IN2_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LIGHT2_GPIO_Port, LIGHT2_Pin, GPIO_PIN_SET);
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(LIGHT1_GPIO_Port, LIGHT1_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pins : M2_IN1_Pin M1_IN1_Pin M1_IN2_Pin */
   GPIO_InitStruct.Pin = M2_IN1_Pin|M1_IN1_Pin|M1_IN2_Pin;
@@ -429,6 +639,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : P_CONTROL_Pin LOAD2_Pin LOAD1_Pin */
+  GPIO_InitStruct.Pin = P_CONTROL_Pin|LOAD2_Pin|LOAD1_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pins : M3_IN2_Pin M3_IN1_Pin M4_IN1_Pin M4_IN2_Pin
                            STBY_M3_M4_Pin STBY_M1_M2_Pin M2_IN2_Pin */
@@ -439,19 +656,26 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : NSS_Pin */
-  GPIO_InitStruct.Pin = NSS_Pin;
+  /*Configure GPIO pin : BOOZER_Pin */
+  GPIO_InitStruct.Pin = BOOZER_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(NSS_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(BOOZER_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : Reset_Pin */
-  GPIO_InitStruct.Pin = Reset_Pin;
+  /*Configure GPIO pins : LIGHT2_Pin Reset_Pin */
+  GPIO_InitStruct.Pin = LIGHT2_Pin|Reset_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(Reset_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : LIGHT1_Pin NSS_Pin */
+  GPIO_InitStruct.Pin = LIGHT1_Pin|NSS_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /*Configure GPIO pin : DIO0_Pin */
   GPIO_InitStruct.Pin = DIO0_Pin;
@@ -461,11 +685,10 @@ static void MX_GPIO_Init(void)
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
-
+//  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 //  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
-//  Включение прерывания закомментарил не вовремя вызывается прерывание
 /* USER CODE END MX_GPIO_Init_2 */
 }
 
@@ -487,7 +710,7 @@ void StartServo(void const * argument)
  	int8_t TurnNum = 0;
 	float angle = 0;
 	float RotAngle = 1.4111;
-	HAL_Delay(2000);
+	osDelay(2000);
   /* Infinite loop */
   for(;;)
   {
@@ -524,7 +747,7 @@ void StartServo2(void const * argument)
 	 	int8_t TurnNum = 0;
 		double angle = 0;
 		double RotAngle = 1.4111;
-		HAL_Delay(1000);
+		osDelay(1000);
   /* Infinite loop */
   for(;;)
   {
@@ -669,6 +892,195 @@ void StartLoRaRx(void const * argument)
 	  StartRxContLoRa();
   }
   /* USER CODE END StartLoRaRx */
+}
+
+/* USER CODE BEGIN Header_StartOutUart */
+/**
+* @brief Function implementing the OutUart thread.
+* @param argument: Not used
+* @retval None
+* PA10 	USART1_RX
+* PA9	USART1_TX
+* putty.exe -serial COM7 -sercfg 9600,8,n,1,N
+*/
+/* USER CODE END Header_StartOutUart */
+void StartOutUart(void const * argument)
+{
+  /* USER CODE BEGIN StartOutUart */
+//	TransArrayLayout();
+    OutStringTask();
+  /* Infinite loop */
+  for(;;)
+  {
+	osDelay(3000);
+    xSemaphoreTake(SemDMA_UARTHandle,portMAX_DELAY);
+    OutStringTask();
+  }
+  /* USER CODE END StartOutUart */
+}
+
+/* USER CODE BEGIN Header_StartRxError */
+/**
+* @brief Function implementing the RxError thread.
+* @param argument: Not used
+* @retval None
+* LIGHT1 == PA8
+* LIGHT2 == PB15
+* BOOZER == PB14
+*/
+/* USER CODE END Header_StartRxError */
+void StartRxError(void const * argument)
+{
+  /* USER CODE BEGIN StartRxError */
+	//I turn on the timer
+	HAL_TIM_Base_Start_IT(&htim1);
+  /* Infinite loop */
+  for(;;)
+  {
+	  // Waits for a signal from an interrupt
+	  xSemaphoreTake(Sem_Time_RxErrHandle,portMAX_DELAY);
+	  // Zeroes out the array of commands and pauses the receiving task
+	  SX1276LoRaSetOpMode( RFLR_OPMODE_STANDBY ); // Stopping receiving packages.
+	  ZeroCommArr();	// I reset all commands.
+	  vTaskSuspend(LoRaRxHandle);
+
+	  //Start light and sound alarm
+	  vTaskResume(SoundAlarmHandle);
+	  vTaskResume(LightSignalHandle);
+
+	  osDelay(800);
+	  vTaskResume(LoRaRxHandle);
+	  StartRxContLoRa();
+
+  }
+  /* USER CODE END StartRxError */
+}
+
+/* USER CODE BEGIN Header_StartVoltMeas */
+/**
+* @brief Function implementing the VoltMeas thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartVoltMeas */
+void StartVoltMeas(void const * argument)
+{
+  /* USER CODE BEGIN StartVoltMeas */
+	float U = 0;
+	// calibration to improve accuracy
+	HAL_ADCEx_Calibration_Start(&hadc1);
+  /* Infinite loop */
+  for(;;)
+  {
+
+	  StartMeasure();
+	  //Waiting for a semophore indicating that the transformation is complete.
+  	  xSemaphoreTake(SemDMA_VoltMeasHandle,portMAX_DELAY);
+
+	   //calculation of the obtained values
+  	  U = VoltageCalc();
+
+  	  BatteryStatus = CheckBatVolt(U);
+
+  	  switch (BatteryStatus) {
+
+  	  case VOLT_CAUTION :{ // Unlocking the Low Voltage Alarm Task
+  		  vTaskResume(LightSignalHandle);
+  		  break;
+  	  }
+  	  case VOLT_SHUTDOWN :{ // unlock alarm and block all tasks
+  		  //turns off the camera
+  		  HAL_GPIO_WritePin(P_CONTROL_GPIO_Port, P_CONTROL_Pin, GPIO_PIN_RESET);
+
+  		  vTaskSuspend(ServoHandle);
+  		  vTaskSuspend(Servo2Handle);
+  		  vTaskSuspend(EngineTestHandle);
+  		  //turns off the engines.!!!!
+
+
+  		  vTaskSuspend(LoRaRxHandle);
+//  		  vTaskSuspend(OutUartHandle);
+  		  vTaskSuspend(RxErrorHandle);
+
+  		  vTaskResume(LightSignalHandle);
+  	  	  vTaskResume(SoundAlarmHandle);
+  	  	  vTaskSuspend(NULL);
+
+  		  break;
+  	  }
+
+  	  }
+  	//Stops itself. So as not to start the measurements again.
+	  osDelay(4000);
+  }
+  /* USER CODE END StartVoltMeas */
+}
+
+/* USER CODE BEGIN Header_StartLightSignal */
+/**
+* @brief Function implementing the LightSignal thread.
+* @param argument: Not used
+* @retval None
+* Light signaling
+*/
+/* USER CODE END Header_StartLightSignal */
+void StartLightSignal(void const * argument)
+{
+  /* USER CODE BEGIN StartLightSignal */
+	vTaskSuspend(NULL);
+  /* Infinite loop */
+  for(;;)
+  {
+	  HAL_GPIO_WritePin(LIGHT1_GPIO_Port, LIGHT1_Pin, GPIO_PIN_RESET);
+	  osDelay(500);
+	  HAL_GPIO_WritePin(LIGHT1_GPIO_Port, LIGHT1_Pin, GPIO_PIN_SET);
+	  osDelay(500);
+  }
+  /* USER CODE END StartLightSignal */
+}
+
+/* USER CODE BEGIN Header_StartSoundAlarm */
+/**
+* @brief Function implementing the SoundAlarm thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartSoundAlarm */
+void StartSoundAlarm(void const * argument)
+{
+  /* USER CODE BEGIN StartSoundAlarm */
+	vTaskSuspend(NULL);
+  /* Infinite loop */
+  for(;;)
+  {
+	  HAL_GPIO_WritePin(BOOZER_GPIO_Port, BOOZER_Pin, GPIO_PIN_SET);
+	  osDelay(500);
+	  HAL_GPIO_WritePin(BOOZER_GPIO_Port, BOOZER_Pin, GPIO_PIN_RESET);
+	  osDelay(500);
+  }
+  /* USER CODE END StartSoundAlarm */
+}
+
+/* USER CODE BEGIN Header_StartControlTask */
+/**
+* @brief Function implementing the ControlTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartControlTask */
+void StartControlTask(void const * argument)
+{
+  /* USER CODE BEGIN StartControlTask */
+  /* Infinite loop */
+  for(;;)
+  {
+	  xSemaphoreTake(SemControlTaskHandle,portMAX_DELAY);
+	  HAL_GPIO_WritePin(BOOZER_GPIO_Port, BOOZER_Pin, GPIO_PIN_RESET);
+	  vTaskSuspend(SoundAlarmHandle);
+	  HAL_GPIO_WritePin(LIGHT1_GPIO_Port, LIGHT1_Pin, GPIO_PIN_SET);
+	  vTaskSuspend(LightSignalHandle);
+  }
+  /* USER CODE END StartControlTask */
 }
 
 /**

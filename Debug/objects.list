@@ -1,3 +1,4 @@
+"./ADC_LoadCell/ADC_LoadCell.o"
 "./ChaeburatorIT_Proc/ChaeburatorIT_Proc.o"
 "./Core/Src/freertos.o"
 "./Core/Src/main.o"
@@ -9,6 +10,8 @@
 "./Core/Startup/startup_stm32f103c8tx.o"
 "./Drivers/BrushedDC/BrushedDC.o"
 "./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal.o"
+"./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_adc.o"
+"./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_adc_ex.o"
 "./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.o"
 "./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_dma.o"
 "./Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.o"
@@ -42,3 +45,4 @@
 "./SX12xxDrivers-V2.1.0/src/radio/sx1276-LoRaMisk.o"
 "./SX12xxDrivers-V2.1.0/src/radio/sx1276-Lora.o"
 "./SX12xxDrivers-V2.1.0/src/radio/sx1276.o"
+"./UART_Output/UART_Output.o"

@@ -5,10 +5,6 @@
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:466:14:prvInitialiseMutex	2
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:496:16:xQueueCreateMutex	1
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:512:16:xQueueCreateMutexStatic	1
-../Middlewares/Third_Party/FreeRTOS/Source/queue.c:532:15:xQueueGetMutexHolder	2
-../Middlewares/Third_Party/FreeRTOS/Source/queue.c:563:15:xQueueGetMutexHolderFromISR	3
-../Middlewares/Third_Party/FreeRTOS/Source/queue.c:686:16:xQueueCreateCountingSemaphoreStatic	4
-../Middlewares/Third_Party/FreeRTOS/Source/queue.c:714:16:xQueueCreateCountingSemaphore	4
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:740:12:xQueueGenericSend	23
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:950:12:xQueueGenericSendFromISR	14
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:1112:12:xQueueGiveFromISR	11

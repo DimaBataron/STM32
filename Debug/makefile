@@ -9,6 +9,7 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include UART_Output/subdir.mk
 -include SX12xxDrivers-V2.1.0/src/radio/subdir.mk
 -include SX12xxDrivers-V2.1.0/src/RxTx/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/subdir.mk
@@ -21,6 +22,7 @@ RM := rm -rf
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
 -include ChaeburatorIT_Proc/subdir.mk
+-include ADC_LoadCell/subdir.mk
 -include objects.mk
 
 ifneq ($(MAKECMDGOALS),clean)

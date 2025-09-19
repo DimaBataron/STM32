@@ -1,0 +1,3 @@
+../ADC_LoadCell/ADC_LoadCell.c:21:6:StartMeasure	8	static
+../ADC_LoadCell/ADC_LoadCell.c:32:7:VoltageCalc	24	static
+../ADC_LoadCell/ADC_LoadCell.c:47:6:HAL_ADC_ConvCpltCallback	24	static

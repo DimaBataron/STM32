@@ -1,0 +1,5 @@
+../UART_Output/UART_Output.c:16:14:TransArrayLayout	2
+../UART_Output/UART_Output.c:76:14:MemReqString	1
+../UART_Output/UART_Output.c:90:10:MemCpyStr	1
+../UART_Output/UART_Output.c:102:6:OutStringTask	1
+../UART_Output/UART_Output.c:120:6:HAL_UART_TxCpltCallback	3
