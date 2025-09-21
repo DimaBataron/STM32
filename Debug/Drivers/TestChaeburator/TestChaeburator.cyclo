@@ -1,0 +1,3 @@
+../Drivers/TestChaeburator/TestChaeburator.c:40:6:TestFunction	1
+../Drivers/TestChaeburator/TestChaeburator.c:128:6:TestMotor	4
+../Drivers/TestChaeburator/TestChaeburator.c:145:6:Test2Motor	4

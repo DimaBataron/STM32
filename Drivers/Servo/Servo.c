@@ -47,20 +47,16 @@ void ServoStartInit(TIM_HandleTypeDef *htim, uint32_t Channel){
  * ‘ункци€ поворачивает сервомашинку. ѕринимает на вход :
  * 	- адрес структуры сервомашины
  * 	- номер канала.
- *  - число соответствующее повороту.
+ *  - угол поворота.
  */
 
-void SteeringWheel(TIM_HandleTypeDef *htim, uint32_t Channel, int8_t TurnNum){
+void SteeringWheel(TIM_HandleTypeDef *htim, uint32_t Channel, float angle){
+	static 	float RotAngle = 1.4111;
+	int8_t TurnNum;
 	int32_t ServoNumber = SERV_ZERO;
+
+	TurnNum = (int8_t)(angle * RotAngle);
 	ServoNumber = SERV_ZERO+(TurnNum*SERV_PITCH);
-//	if(TurnNum > 0){
-//		ServoNumber += TurnNum * SERV_PITCH;
-//		ServoNumber > SERV_PLUS_90 ? ServoNumber = SERV_PLUS_90 : ServoNumber;
-//	}
-//	else {
-//		ServoNumber += TurnNum * SERV_PITCH;
-//		ServoNumber < SERV_MINUS_90 ? ServoNumber = SERV_MINUS_90 : ServoNumber;
-//	}
 
 	switch (Channel){
 			case TIM_CHANNEL_1 : {

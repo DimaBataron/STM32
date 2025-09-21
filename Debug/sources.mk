@@ -27,8 +27,10 @@ ChaeburatorIT_Proc \
 Core/Src \
 Core/Startup \
 Drivers/BrushedDC \
+Drivers/Chaeburator \
 Drivers/STM32F1xx_HAL_Driver/Src \
 Drivers/Servo \
+Drivers/TestChaeburator \
 Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS \
 Middlewares/Third_Party/FreeRTOS/Source \
 Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3 \

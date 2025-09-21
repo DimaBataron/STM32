@@ -28,6 +28,6 @@
 
 void ServoStartInit(TIM_HandleTypeDef *htim, uint32_t Channel);
 
-void SteeringWheel(TIM_HandleTypeDef *htim, uint32_t Channel, int8_t TurnNum);
+void SteeringWheel(TIM_HandleTypeDef *htim, uint32_t Channel, float angle);
 
 #endif /* SERVO_H_ */

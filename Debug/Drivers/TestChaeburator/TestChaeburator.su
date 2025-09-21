@@ -1,0 +1,3 @@
+../Drivers/TestChaeburator/TestChaeburator.c:40:6:TestFunction	104	static
+../Drivers/TestChaeburator/TestChaeburator.c:128:6:TestMotor	24	static
+../Drivers/TestChaeburator/TestChaeburator.c:145:6:Test2Motor	32	static

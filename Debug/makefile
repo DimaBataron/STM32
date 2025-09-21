@@ -16,8 +16,10 @@ RM := rm -rf
 -include Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM3/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/subdir.mk
+-include Drivers/TestChaeburator/subdir.mk
 -include Drivers/Servo/subdir.mk
 -include Drivers/STM32F1xx_HAL_Driver/Src/subdir.mk
+-include Drivers/Chaeburator/subdir.mk
 -include Drivers/BrushedDC/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk

@@ -17,9 +17,21 @@
   * Don't forget to comment   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
   * IN MX_GPIO_Init()  so as not to disrupt the logic of the work.
   *
+  * Add Servo3 Servo4
+  *
+  *	TIM1 htim1 is configured to interrupt every second.
+  *	TIM2 htim2 is configured for 10 kHz interrupts. It is used for motor clocking.
+  *	TIM3 htim3 is configured to operate at 50Hz. It is used to control the servo motor.
+  *
+  *
   * There is not enough memory for output to UART
-  ******************************************************************************
-  */
+  *
+  *   Configure GPIO pin Output Level
+//  HAL_GPIO_WritePin(LIGHT2_GPIO_Port, LIGHT2_Pin, GPIO_PIN_RESET);
+
+	Configure GPIO pin Output Level
+//  HAL_GPIO_WritePin(LIGHT1_GPIO_Port, LIGHT1_Pin, GPIO_PIN_RESET);
+*/
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -27,7 +39,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "TestChaeburator.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -146,6 +158,9 @@ int main(void)
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
 
+  // Test
+  TestFunction();
+
   /* USER CODE END 2 */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -189,47 +204,51 @@ int main(void)
 
   /* Create the thread(s) */
   /* definition and creation of Servo */
-  osThreadDef(Servo, StartServo, osPriorityLow, 0, 150);
-  ServoHandle = osThreadCreate(osThread(Servo), NULL);
-
-  /* definition and creation of Servo2 */
-  osThreadDef(Servo2, StartServo2, osPriorityLow, 0, 150);
-  Servo2Handle = osThreadCreate(osThread(Servo2), NULL);
-
-  /* definition and creation of EngineTest */
-  osThreadDef(EngineTest, StartEngineTest, osPriorityBelowNormal, 0, 150);
-  EngineTestHandle = osThreadCreate(osThread(EngineTest), NULL);
-
-  /* definition and creation of LoRaRx */
-  osThreadDef(LoRaRx, StartLoRaRx, osPriorityAboveNormal, 0, 300);
-  LoRaRxHandle = osThreadCreate(osThread(LoRaRx), NULL);
+//  osThreadDef(Servo, StartServo, osPriorityLow, 0, 150);
+//  ServoHandle = osThreadCreate(osThread(Servo), NULL);
+//
+//  /* definition and creation of Servo2 */
+//  osThreadDef(Servo2, StartServo2, osPriorityLow, 0, 150);
+//  Servo2Handle = osThreadCreate(osThread(Servo2), NULL);
+//
+//  /* definition and creation of EngineTest */
+//  osThreadDef(EngineTest, StartEngineTest, osPriorityBelowNormal, 0, 150);
+//  EngineTestHandle = osThreadCreate(osThread(EngineTest), NULL);
+//
+//  /* definition and creation of LoRaRx */
+//  osThreadDef(LoRaRx, StartLoRaRx, osPriorityAboveNormal, 0, 300);
+//  LoRaRxHandle = osThreadCreate(osThread(LoRaRx), NULL);
 
   /* definition and creation of OutUart */
 //  osThreadDef(OutUart, StartOutUart, osPriorityLow, 0, 512);
 //  OutUartHandle = osThreadCreate(osThread(OutUart), NULL);
 
   /* definition and creation of RxError */
-  osThreadDef(RxError, StartRxError, osPriorityNormal, 0, 300);
-  RxErrorHandle = osThreadCreate(osThread(RxError), NULL);
-
-  /* definition and creation of VoltMeas */
-  osThreadDef(VoltMeas, StartVoltMeas, osPriorityLow, 0, 256);
-  VoltMeasHandle = osThreadCreate(osThread(VoltMeas), NULL);
-
-  /* definition and creation of LightSignal */
-  osThreadDef(LightSignal, StartLightSignal, osPriorityLow, 0, 128);
-  LightSignalHandle = osThreadCreate(osThread(LightSignal), NULL);
-
-  /* definition and creation of SoundAlarm */
-  osThreadDef(SoundAlarm, StartSoundAlarm, osPriorityLow, 0, 128);
-  SoundAlarmHandle = osThreadCreate(osThread(SoundAlarm), NULL);
-
-  /* definition and creation of ControlTask */
-  osThreadDef(ControlTask, StartControlTask, osPriorityHigh, 0, 200);
-  ControlTaskHandle = osThreadCreate(osThread(ControlTask), NULL);
+//  osThreadDef(RxError, StartRxError, osPriorityNormal, 0, 300);
+//  RxErrorHandle = osThreadCreate(osThread(RxError), NULL);
+//
+//  /* definition and creation of VoltMeas */
+//  osThreadDef(VoltMeas, StartVoltMeas, osPriorityLow, 0, 256);
+//  VoltMeasHandle = osThreadCreate(osThread(VoltMeas), NULL);
+//
+//  /* definition and creation of LightSignal */
+//  osThreadDef(LightSignal, StartLightSignal, osPriorityLow, 0, 128);
+//  LightSignalHandle = osThreadCreate(osThread(LightSignal), NULL);
+//
+//  /* definition and creation of SoundAlarm */
+//  osThreadDef(SoundAlarm, StartSoundAlarm, osPriorityLow, 0, 128);
+//  SoundAlarmHandle = osThreadCreate(osThread(SoundAlarm), NULL);
+//
+//  /* definition and creation of ControlTask */
+//  osThreadDef(ControlTask, StartControlTask, osPriorityHigh, 0, 200);
+//  ControlTaskHandle = osThreadCreate(osThread(ControlTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
+  /*
+   * I've commented everything out here (all tasks, I think I've finished OS testing).
+   * I'll be testing in one task. Before launching the scheduler.
+   */
   /* USER CODE END RTOS_THREADS */
 
   /* Start scheduler */
@@ -628,10 +647,10 @@ static void MX_GPIO_Init(void)
                           |M2_IN2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LIGHT2_GPIO_Port, LIGHT2_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LIGHT2_GPIO_Port, LIGHT2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LIGHT1_GPIO_Port, LIGHT1_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(LIGHT1_GPIO_Port, LIGHT1_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : M2_IN1_Pin M1_IN1_Pin M1_IN2_Pin */
   GPIO_InitStruct.Pin = M2_IN1_Pin|M1_IN1_Pin|M1_IN2_Pin;
@@ -785,9 +804,7 @@ void StartEngineTest(void const * argument)
   for(;;)
   {
 //	  ==============================================
-//	���� ������ ���������.
 	  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
-	  //�������� � ���� �������.
 	  do{
 		  Brushed2DC_Control(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_2, acceleration, \
 				  	  	  	  DirectRotCW, DirectRotCCW);
@@ -796,7 +813,6 @@ void StartEngineTest(void const * argument)
 	  }
 	  while(acceleration < 66);
 
-	//�������� �������.
 	  do{
 		  Brushed2DC_Control(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_2, acceleration, \
 				  	  	  	  	DirectRotCW, DirectRotCCW);
@@ -807,7 +823,6 @@ void StartEngineTest(void const * argument)
 	  HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
 
 //	  =================================================
-//	  ���� ������� ���������
 	  acceleration = 5;
 	  Brushed2DC_Control(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_2, acceleration, \
 	  	  				  	  	  	  DirectRotCW, DirectRotCCW);
@@ -820,7 +835,6 @@ void StartEngineTest(void const * argument)
 	  	  }
 	  	  while(acceleration < 66);
 
-	  	//�������� �������.
 	  	  do{
 	  		  Brushed2DC_Control(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_2, acceleration, \
 	  				  	  	  	  	DirectRotCW, DirectRotCCW);
@@ -831,7 +845,6 @@ void StartEngineTest(void const * argument)
 	 HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_2);
 
 //	 ===============================================
-//	���� ���� ���������� �����
 	 acceleration = 5;
 	 Brushed2DC_Control(&htim2, TIM_CHANNEL_1, TIM_CHANNEL_2, acceleration, \
 	 	  	  				  	  	  	  DirectRotCW, DirectRotCCW);
@@ -856,7 +869,6 @@ void StartEngineTest(void const * argument)
  	 HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_1);
  	 HAL_TIM_PWM_Stop(&htim2, TIM_CHANNEL_2);
  	 acceleration = 0;
-//������� ������
     osDelay(1);
   }
   /* USER CODE END StartEngineTest */

@@ -1,3 +1,4 @@
 ../Drivers/BrushedDC/BrushedDC.c:11:6:Brushed2DC_Control	7
 ../Drivers/BrushedDC/BrushedDC.c:74:6:Brushed1DC_Control	2
-../Drivers/BrushedDC/BrushedDC.c:94:6:EngineBrake	7
+../Drivers/BrushedDC/BrushedDC.c:97:6:DC_Control	2
+../Drivers/BrushedDC/BrushedDC.c:117:6:EngineBrake	7

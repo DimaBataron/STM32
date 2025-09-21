@@ -90,6 +90,29 @@ void Brushed1DC_Control(TIM_HandleTypeDef *htim1,uint32_t Channel, int8_t accele
 	}
 }
 
+
+// Функция для управления одним двигателем. На вход принимает структуру
+// описания конкретного дивигателя, и ускорение.
+// принимает на вход +-100%
+void DC_Control(DC_Motor *Motor, int8_t acceleration){
+	HAL_GPIO_WritePin(Motor->StbyPort, Motor->StbyPin, GPIO_PIN_SET);
+
+	static float accelStep =  MotorStep;
+	int32_t accelPWM = (int32_t)(accelStep*(float)acceleration);
+	// задний ход
+		if(accelPWM<0){
+			HAL_GPIO_WritePin(Motor->PortIn1, Motor->PinIn1, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(Motor->PortIn2, Motor->PinIn2, GPIO_PIN_SET);
+			*(Motor->pwm_register_ptr) = -accelPWM;
+		}
+		// вперед
+		else {
+			HAL_GPIO_WritePin(Motor->PortIn1, Motor->PinIn1, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(Motor->PortIn2, Motor->PinIn2, GPIO_PIN_RESET);
+			*(Motor->pwm_register_ptr) = accelPWM;
+		}
+}
+
 // тормоз двигателем
 void EngineBrake(uint32_t Channel){
 	if((Channel == TIM_CHANNEL_1) || (Channel == TIM_CHANNEL_2) ){

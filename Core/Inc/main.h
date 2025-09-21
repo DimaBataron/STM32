@@ -38,6 +38,10 @@ extern "C" {
 #include "cmsis_os.h"
 #include "UART_Outpt.h"
 #include "ADC_LoadCell.h"
+
+// Testing
+
+//#include "TestChaeburator.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -58,6 +62,10 @@ extern osThreadId SoundAlarmHandle;
 
 extern UART_HandleTypeDef huart1;
 extern ADC_HandleTypeDef hadc1;
+
+extern TIM_HandleTypeDef htim2;
+extern TIM_HandleTypeDef htim3;
+
 /* USER CODE END ET */
 
 /* Exported constants --------------------------------------------------------*/

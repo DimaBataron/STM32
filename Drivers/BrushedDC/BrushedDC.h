@@ -18,9 +18,22 @@
 // ћертва€ зона
 #define DeadZone 3
 
-// 7199/127 = 56.68 на единицу
+// 7199/127 = 56.68 на единицу (процентов?) 127 максимальное число которое можно при€нть
+// с пульта
 #define MotorStep 56.68
 
+// —труктура описани€ двигател€.
+typedef struct {
+	uint16_t PinIn1; //  пин направлени€ вращени€ 1
+	uint16_t PinIn2; // пин направлени€ вращени€ 2
+	uint16_t StbyPin;
+
+	GPIO_TypeDef * PortIn1;
+	GPIO_TypeDef * PortIn2;
+	GPIO_TypeDef * StbyPort;
+	volatile uint32_t *pwm_register_ptr; // адрес регистра шим этого двигател€
+
+} DC_Motor;
 
 /*
  * ‘ункци€ управл€ет одновременно двум€ двигател€ми.
@@ -41,6 +54,9 @@ void Brushed2DC_Control(TIM_HandleTypeDef *htim1,uint32_t Channnel1, \
  *
  * */
 void Brushed1DC_Control(TIM_HandleTypeDef *htim1,uint32_t Channel, int8_t acceleration);
+
+
+void DC_Control(DC_Motor *Motor, int8_t acceleration);
 
 // тормоз двигателем
 void EngineBrake(uint32_t Channel);

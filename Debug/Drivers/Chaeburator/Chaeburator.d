@@ -1,4 +1,5 @@
-Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
+Drivers/Chaeburator/Chaeburator.o: ../Drivers/Chaeburator/Chaeburator.c \
+ ../Drivers/Chaeburator/Chaeburator.h ../Core/Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Core/Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
@@ -57,9 +58,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
  D:/East23/Project/CubeIDE/ChaeburatorTest/UART_Output/UART_Outpt.h \
- D:/East23/Project/CubeIDE/ChaeburatorTest/ADC_LoadCell/ADC_LoadCell.h \
- D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/TestChaeburator/TestChaeburator.h \
- D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/Chaeburator/Chaeburator.h
+ D:/East23/Project/CubeIDE/ChaeburatorTest/ADC_LoadCell/ADC_LoadCell.h
+../Drivers/Chaeburator/Chaeburator.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 ../Core/Inc/stm32f1xx_hal_conf.h:
@@ -120,5 +120,3 @@ D:/East23/Project/CubeIDE/ChaeburatorTest/ChaeburatorIT_Proc/ChaeburatorIT_Proc.
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
 D:/East23/Project/CubeIDE/ChaeburatorTest/UART_Output/UART_Outpt.h:
 D:/East23/Project/CubeIDE/ChaeburatorTest/ADC_LoadCell/ADC_LoadCell.h:
-D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/TestChaeburator/TestChaeburator.h:
-D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/Chaeburator/Chaeburator.h:
