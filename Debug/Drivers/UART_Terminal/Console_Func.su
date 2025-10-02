@@ -1,0 +1,2 @@
+../Drivers/UART_Terminal/Console_Func.c:23:13:hello_command_handler	16	static
+../Drivers/UART_Terminal/Console_Func.c:36:13:s_command_handler	64	static

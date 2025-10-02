@@ -9,3 +9,5 @@
 ../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c:657:6:vEventGroupSetBitsCallback	16	static
 ../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c:665:6:vEventGroupClearBitsCallback	16	static
 ../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c:671:19:prvTestWaitCondition	32	static
+../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c:723:14:uxEventGroupGetNumber	24	static
+../Middlewares/Third_Party/FreeRTOS/Source/event_groups.c:745:7:vEventGroupSetNumber	16	static

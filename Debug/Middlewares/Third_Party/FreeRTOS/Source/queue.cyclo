@@ -17,6 +17,9 @@
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:1946:13:uxQueueSpacesAvailable	2
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:1963:13:uxQueueMessagesWaitingFromISR	2
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:1975:6:vQueueDelete	3
+../Middlewares/Third_Party/FreeRTOS/Source/queue.c:2019:14:uxQueueGetQueueNumber	1
+../Middlewares/Third_Party/FreeRTOS/Source/queue.c:2029:7:vQueueSetQueueNumber	1
+../Middlewares/Third_Party/FreeRTOS/Source/queue.c:2039:10:ucQueueGetQueueType	1
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:2049:21:prvGetDisinheritPriorityAfterTimeout	2
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:2074:19:prvCopyDataToQueue	8
 ../Middlewares/Third_Party/FreeRTOS/Source/queue.c:2153:13:prvCopyDataFromQueue	3

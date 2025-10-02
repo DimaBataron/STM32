@@ -56,8 +56,11 @@ Core/Src/freertos.o: ../Core/Src/freertos.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- D:/East23/Project/CubeIDE/ChaeburatorTest/UART_Output/UART_Outpt.h \
- D:/East23/Project/CubeIDE/ChaeburatorTest/ADC_LoadCell/ADC_LoadCell.h
+ D:/East23/Project/CubeIDE/ChaeburatorTest/ADC_LoadCell/ADC_LoadCell.h \
+ D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/UART_Terminal/UART_Terminal.h \
+ D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/console/Console.h \
+ D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/console/console_config.h \
+ D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/console/console_private_helpers.h
 ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h:
 ../Core/Inc/FreeRTOSConfig.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h:
@@ -116,5 +119,8 @@ D:/East23/Project/CubeIDE/ChaeburatorTest/ChaeburatorIT_Proc/ChaeburatorIT_Proc.
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-D:/East23/Project/CubeIDE/ChaeburatorTest/UART_Output/UART_Outpt.h:
 D:/East23/Project/CubeIDE/ChaeburatorTest/ADC_LoadCell/ADC_LoadCell.h:
+D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/UART_Terminal/UART_Terminal.h:
+D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/console/Console.h:
+D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/console/console_config.h:
+D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/console/console_private_helpers.h:

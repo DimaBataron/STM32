@@ -42,28 +42,28 @@ void TestFunction(){
 	Power_ON();
 
 	//включение выключение света.
-//	Light1(GPIO_PIN_SET);
-//	Light2(GPIO_PIN_SET);
-//	HAL_Delay(2000);
-//	Light1(GPIO_PIN_RESET);
-//	Light2(GPIO_PIN_RESET);
+	Light1(GPIO_PIN_SET);
+	Light2(GPIO_PIN_SET);
+	HAL_Delay(2000);
+	Light1(GPIO_PIN_RESET);
+	Light2(GPIO_PIN_RESET);
 
 ////	надоело гудеть я отключил
-//	Boozer(GPIO_PIN_SET);
-//	HAL_Delay(500);
-//	Boozer(GPIO_PIN_RESET);
-//
-//	ServoStartInit(&htim3, TIM_CHANNEL_1);
-//	ServoStartInit(&htim3, TIM_CHANNEL_2);
-////
-//	SteeringWheel(&htim3, TIM_CHANNEL_1, 90.0f);
-//	SteeringWheel(&htim3, TIM_CHANNEL_2, 90.0f);
-//	HAL_Delay(2000);
-//	SteeringWheel(&htim3, TIM_CHANNEL_1, -90.0f);
-//	SteeringWheel(&htim3, TIM_CHANNEL_2, -90.0f);
-//	HAL_Delay(2000);
-//	SteeringWheel(&htim3, TIM_CHANNEL_1, 0.0f);
-//	SteeringWheel(&htim3, TIM_CHANNEL_2, 0.0f);
+	Boozer(GPIO_PIN_SET);
+	HAL_Delay(500);
+	Boozer(GPIO_PIN_RESET);
+
+	ServoStartInit(&htim3, TIM_CHANNEL_1);
+	ServoStartInit(&htim3, TIM_CHANNEL_2);
+
+	SteeringWheel(&htim3, TIM_CHANNEL_1, 90.0f);
+	SteeringWheel(&htim3, TIM_CHANNEL_2, 90.0f);
+	HAL_Delay(2000);
+	SteeringWheel(&htim3, TIM_CHANNEL_1, -90.0f);
+	SteeringWheel(&htim3, TIM_CHANNEL_2, -90.0f);
+	HAL_Delay(2000);
+	SteeringWheel(&htim3, TIM_CHANNEL_1, 0.0f);
+	SteeringWheel(&htim3, TIM_CHANNEL_2, 0.0f);
 
 //	Не испытал Servo3 и Servo4
 	DC_Motor Motor1 = {0};
@@ -74,8 +74,6 @@ void TestFunction(){
 	Motor1.StbyPin = STBY_M1_M2_Pin;
 	Motor1.StbyPort = STBY_M1_M2_GPIO_Port;
 	Motor1.pwm_register_ptr = &(htim2.Instance->CCR1);
-
-//	int8_t acceleration = 50;
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
 //	TestMotor(&Motor1, acceleration);
 //
@@ -88,7 +86,6 @@ void TestFunction(){
 	Motor2.StbyPin = STBY_M1_M2_Pin;
 	Motor2.StbyPort = STBY_M1_M2_GPIO_Port;
 	Motor2.pwm_register_ptr = &(htim2.Instance->CCR2);
-
 	HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_2);
 //	TestMotor(&Motor2, acceleration);
 	Test2Motor(&Motor1, &Motor2, 120);
@@ -128,16 +125,17 @@ void TestFunction(){
 void TestMotor(DC_Motor *Motor, int8_t acceleration){
 	for(int8_t i = 0; i< (acceleration+1); i+=1){
 		DC_Control(Motor, i);
-		HAL_Delay(1);
+		HAL_Delay(5);
 	}
-	HAL_Delay(10000);
+	HAL_Delay(1000);
 	for(int8_t i = (acceleration+1); i> -acceleration ; i-=1){
 		DC_Control(Motor, i);
-		HAL_Delay(1);
+		HAL_Delay(5);
 	}
+	HAL_Delay(1000);
 	for(int8_t i = -acceleration-1; i<0; i+=1){
 		DC_Control(Motor, i);
-		HAL_Delay(1);
+		HAL_Delay(5);
 	}
 }
 
@@ -148,11 +146,13 @@ void Test2Motor(DC_Motor *Motor1, DC_Motor *Motor2, int8_t acceleration){
 		DC_Control(Motor2, i);
 		HAL_Delay(5);
 	}
+	HAL_Delay(1000);
 	for(int8_t i = (acceleration+1); i> -acceleration ; i-=1){
 		DC_Control(Motor1, i);
 		DC_Control(Motor2, i);
 		HAL_Delay(5);
 	}
+	HAL_Delay(1000);
 	for(int8_t i = -acceleration-1; i<0; i+=1){
 		DC_Control(Motor1, i);
 		DC_Control(Motor2, i);

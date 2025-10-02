@@ -36,8 +36,9 @@ extern "C" {
 #include "SX1276_Start.h"
 #include "ChaeburatorIT_Proc.h"
 #include "cmsis_os.h"
-#include "UART_Outpt.h"
+//#include "UART_Outpt.h"
 #include "ADC_LoadCell.h"
+#include "UART_Terminal.h"
 
 // Testing
 
@@ -65,6 +66,8 @@ extern ADC_HandleTypeDef hadc1;
 
 extern TIM_HandleTypeDef htim2;
 extern TIM_HandleTypeDef htim3;
+
+extern osMessageQId UART_Rx_QueHandle;
 
 /* USER CODE END ET */
 

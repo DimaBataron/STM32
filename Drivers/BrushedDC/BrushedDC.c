@@ -91,9 +91,9 @@ void Brushed1DC_Control(TIM_HandleTypeDef *htim1,uint32_t Channel, int8_t accele
 }
 
 
-// Функция для управления одним двигателем. На вход принимает структуру
-// описания конкретного дивигателя, и ускорение.
-// принимает на вход +-100%
+// A function for controlling a single motor. It accepts a structure
+// describing a specific motor and acceleration as input.
+
 void DC_Control(DC_Motor *Motor, int8_t acceleration){
 	HAL_GPIO_WritePin(Motor->StbyPort, Motor->StbyPin, GPIO_PIN_SET);
 
@@ -144,3 +144,37 @@ void EngineBrake(uint32_t Channel){
 			}
 		}
 }
+
+/*
+ * The motor control function accepts a byte as input that controls the motor.
+ * This byte is a global variable that can be changed in various ways.
+ * In my case, in the console or after receiving a command from LoRa.
+ * Implements smooth motor acceleration.
+ */
+void Engine_Control(int8_t acceleration, DC_Motor *Motor1, DC_Motor *Motor2){
+	static int8_t CurrentAcceleration = 0;
+	int8_t tmp = 0;
+	tmp = CurrentAcceleration - acceleration;
+	CurrentAcceleration += AccelerationIncr(tmp);
+	DC_Control(Motor1, CurrentAcceleration);
+	DC_Control(Motor2, CurrentAcceleration);
+	osDelay(10);
+}
+
+/*
+ * Функция возвращает приращение на которое нужно изменить ускорение.
+ * Если изменение на 1 ничего не делать.
+ */
+uint8_t AccelerationIncr(uint8_t tmp){
+	if(tmp < 0){
+		if(tmp < -1){
+			return 1;
+		}
+	}
+	else {
+		if(tmp > 1){
+			return -1;
+		}
+	}
+}
+

@@ -1,0 +1,7 @@
+../Drivers/UART_Terminal/Console_Func.c:23:13:hello_command_handler	1
+../Drivers/UART_Terminal/Console_Func.c:36:13:s_command_handler	1
+../Drivers/UART_Terminal/UART_Terminal.c:20:6:StartUartRX	1
+../Drivers/UART_Terminal/UART_Terminal.c:28:6:HAL_UART_RxCpltCallback	2
+../Drivers/UART_Terminal/UART_Terminal.c:50:10:USART1_Receive	4
+../Drivers/UART_Terminal/UART_Terminal.c:81:6:console_write_function	1
+../Drivers/UART_Terminal/UART_Terminal.c:95:6:MyConsole_Setup	1

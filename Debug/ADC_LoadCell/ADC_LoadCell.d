@@ -57,8 +57,11 @@ ADC_LoadCell/ADC_LoadCell.o: ../ADC_LoadCell/ADC_LoadCell.c \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h \
  ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h \
- D:/East23/Project/CubeIDE/ChaeburatorTest/UART_Output/UART_Outpt.h \
- D:/East23/Project/CubeIDE/ChaeburatorTest/ADC_LoadCell/ADC_LoadCell.h
+ D:/East23/Project/CubeIDE/ChaeburatorTest/ADC_LoadCell/ADC_LoadCell.h \
+ D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/UART_Terminal/UART_Terminal.h \
+ D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/console/Console.h \
+ D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/console/console_config.h \
+ D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/console/console_private_helpers.h
 ../ADC_LoadCell/ADC_LoadCell.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
@@ -118,5 +121,8 @@ D:/East23/Project/CubeIDE/ChaeburatorTest/ChaeburatorIT_Proc/ChaeburatorIT_Proc.
 ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h:
 ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h:
-D:/East23/Project/CubeIDE/ChaeburatorTest/UART_Output/UART_Outpt.h:
 D:/East23/Project/CubeIDE/ChaeburatorTest/ADC_LoadCell/ADC_LoadCell.h:
+D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/UART_Terminal/UART_Terminal.h:
+D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/console/Console.h:
+D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/console/console_config.h:
+D:/East23/Project/CubeIDE/ChaeburatorTest/Drivers/console/console_private_helpers.h:

@@ -40,6 +40,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "TestChaeburator.h"
+#include "UART_Terminal.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -68,18 +69,18 @@ TIM_HandleTypeDef htim2;
 TIM_HandleTypeDef htim3;
 
 UART_HandleTypeDef huart1;
-DMA_HandleTypeDef hdma_usart1_tx;
 
 osThreadId ServoHandle;
 osThreadId Servo2Handle;
 osThreadId EngineTestHandle;
 osThreadId LoRaRxHandle;
-osThreadId OutUartHandle;
 osThreadId RxErrorHandle;
 osThreadId VoltMeasHandle;
 osThreadId LightSignalHandle;
 osThreadId SoundAlarmHandle;
 osThreadId ControlTaskHandle;
+osThreadId ConsoleTaskHandle;
+osMessageQId UART_Rx_QueHandle;
 osSemaphoreId SemDMA_LoRaHandle;
 osSemaphoreId SemDMA_UARTHandle;
 osSemaphoreId Sem_Time_RxErrHandle;
@@ -103,12 +104,12 @@ void StartServo(void const * argument);
 void StartServo2(void const * argument);
 void StartEngineTest(void const * argument);
 void StartLoRaRx(void const * argument);
-void StartOutUart(void const * argument);
 void StartRxError(void const * argument);
 void StartVoltMeas(void const * argument);
 void StartLightSignal(void const * argument);
 void StartSoundAlarm(void const * argument);
 void StartControlTask(void const * argument);
+void StartConsoleTask(void const * argument);
 
 /* USER CODE BEGIN PFP */
 
@@ -159,7 +160,8 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   // Test
-  TestFunction();
+//  TestFunction();
+  StartUartRX();
 
   /* USER CODE END 2 */
 
@@ -198,6 +200,11 @@ int main(void)
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
 
+  /* Create the queue(s) */
+  /* definition and creation of UART_Rx_Que */
+  osMessageQDef(UART_Rx_Que, 25, uint8_t);
+  UART_Rx_QueHandle = osMessageCreate(osMessageQ(UART_Rx_Que), NULL);
+
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
   /* USER CODE END RTOS_QUEUES */
@@ -218,12 +225,8 @@ int main(void)
 //  /* definition and creation of LoRaRx */
 //  osThreadDef(LoRaRx, StartLoRaRx, osPriorityAboveNormal, 0, 300);
 //  LoRaRxHandle = osThreadCreate(osThread(LoRaRx), NULL);
-
-  /* definition and creation of OutUart */
-//  osThreadDef(OutUart, StartOutUart, osPriorityLow, 0, 512);
-//  OutUartHandle = osThreadCreate(osThread(OutUart), NULL);
-
-  /* definition and creation of RxError */
+//
+//  /* definition and creation of RxError */
 //  osThreadDef(RxError, StartRxError, osPriorityNormal, 0, 300);
 //  RxErrorHandle = osThreadCreate(osThread(RxError), NULL);
 //
@@ -242,6 +245,10 @@ int main(void)
 //  /* definition and creation of ControlTask */
 //  osThreadDef(ControlTask, StartControlTask, osPriorityHigh, 0, 200);
 //  ControlTaskHandle = osThreadCreate(osThread(ControlTask), NULL);
+
+  /* definition and creation of ConsoleTask */
+  osThreadDef(ConsoleTask, StartConsoleTask, osPriorityLow, 0, 426);
+  ConsoleTaskHandle = osThreadCreate(osThread(ConsoleTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -612,9 +619,6 @@ static void MX_DMA_Init(void)
   /* DMA1_Channel1_IRQn interrupt configuration */
   HAL_NVIC_SetPriority(DMA1_Channel1_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel1_IRQn);
-  /* DMA1_Channel4_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel4_IRQn, 6, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel4_IRQn);
 
 }
 
@@ -647,10 +651,10 @@ static void MX_GPIO_Init(void)
                           |M2_IN2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LIGHT2_GPIO_Port, LIGHT2_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LIGHT2_GPIO_Port, LIGHT2_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LIGHT1_GPIO_Port, LIGHT1_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(LIGHT1_GPIO_Port, LIGHT1_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pins : M2_IN1_Pin M1_IN1_Pin M1_IN2_Pin */
   GPIO_InitStruct.Pin = M2_IN1_Pin|M1_IN1_Pin|M1_IN2_Pin;
@@ -704,7 +708,7 @@ static void MX_GPIO_Init(void)
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 5, 0);
-//  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
 
 /* USER CODE BEGIN MX_GPIO_Init_2 */
 //  HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
@@ -906,31 +910,6 @@ void StartLoRaRx(void const * argument)
   /* USER CODE END StartLoRaRx */
 }
 
-/* USER CODE BEGIN Header_StartOutUart */
-/**
-* @brief Function implementing the OutUart thread.
-* @param argument: Not used
-* @retval None
-* PA10 	USART1_RX
-* PA9	USART1_TX
-* putty.exe -serial COM7 -sercfg 9600,8,n,1,N
-*/
-/* USER CODE END Header_StartOutUart */
-void StartOutUart(void const * argument)
-{
-  /* USER CODE BEGIN StartOutUart */
-//	TransArrayLayout();
-    OutStringTask();
-  /* Infinite loop */
-  for(;;)
-  {
-	osDelay(3000);
-    xSemaphoreTake(SemDMA_UARTHandle,portMAX_DELAY);
-    OutStringTask();
-  }
-  /* USER CODE END StartOutUart */
-}
-
 /* USER CODE BEGIN Header_StartRxError */
 /**
 * @brief Function implementing the RxError thread.
@@ -1093,6 +1072,28 @@ void StartControlTask(void const * argument)
 	  vTaskSuspend(LightSignalHandle);
   }
   /* USER CODE END StartControlTask */
+}
+
+/* USER CODE BEGIN Header_StartConsoleTask */
+/**
+* @brief Function implementing the ConsoleTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartConsoleTask */
+void StartConsoleTask(void const * argument)
+{
+  /* USER CODE BEGIN StartConsoleTask */
+	uint8_t Buffer[64];
+	uint32_t len;
+	MyConsole_Setup();
+  /* Infinite loop */
+  for(;;)
+  {
+      len = USART1_Receive(0x0D,Buffer,sizeof(Buffer),portMAX_DELAY);
+      console_process(Buffer, len);
+  }
+  /* USER CODE END StartConsoleTask */
 }
 
 /**
