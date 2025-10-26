@@ -1,0 +1,2 @@
+../SX12xxDrivers-V2.1.0/src/radio/spi.c:17:9:SpiInOut	1
+../SX12xxDrivers-V2.1.0/src/radio/spi.c:31:9:SpiReceive	1

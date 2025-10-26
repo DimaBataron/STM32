@@ -1,0 +1,11 @@
+../Drivers/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:22:10:WriteArrFIFO	3
+../Drivers/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:39:6:InitTxLoRa	1
+../Drivers/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:61:6:StartTxLoRa	1
+../Drivers/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:76:6:TxInterHandl	1
+../Drivers/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:84:6:InitRxContLoRa	1
+../Drivers/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:117:6:StartRxContLoRa	1
+../Drivers/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:129:10:RxContLoRaCmpl	3
+../Drivers/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:186:10:RxContLoRaCmplV2	3
+../Drivers/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:217:10:ReadArrFIFO	3
+../Drivers/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:236:6:TxArrWriteFiFo	1
+../Drivers/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:245:6:TxArrWriteKey	1

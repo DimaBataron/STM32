@@ -1,0 +1,5 @@
+../Drivers/ChaeburatorIT_Proc/ChaeburatorIT_Proc.c:34:6:HAL_GPIO_EXTI_Callback	3
+../Drivers/ChaeburatorIT_Proc/ChaeburatorIT_Proc.c:64:6:CalcRxCommands	1
+../Drivers/ChaeburatorIT_Proc/ChaeburatorIT_Proc.c:90:6:CheckRange	3
+../Drivers/ChaeburatorIT_Proc/ChaeburatorIT_Proc.c:149:6:ZeroCommArr	1
+../Drivers/ChaeburatorIT_Proc/ChaeburatorIT_Proc.c:163:9:CheckBatVolt	3

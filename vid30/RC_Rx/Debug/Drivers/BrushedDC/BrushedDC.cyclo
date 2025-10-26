@@ -1,0 +1,4 @@
+../Drivers/BrushedDC/BrushedDC.c:11:6:Brushed2DC_Control	7
+../Drivers/BrushedDC/BrushedDC.c:97:6:DC_Control	2
+../Drivers/BrushedDC/BrushedDC.c:154:6:Engine_Control	1
+../Drivers/BrushedDC/BrushedDC.c:167:8:AccelerationIncr	4

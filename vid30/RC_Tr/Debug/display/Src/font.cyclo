@@ -1,0 +1,3 @@
+../display/Src/font.c:25:10:font_GetFontStruct	1
+../display/Src/font.c:35:9:font_GetCharWidth	1
+../display/Src/font.c:45:9:font_GetCharHeight	1

@@ -1,0 +1,4 @@
+../Drivers/SX12xxDrivers-V2.1.0/src/radio/sx1276-Lora.c:111:6:SX1276LoRaInit	8	static
+../Drivers/SX12xxDrivers-V2.1.0/src/radio/sx1276-Lora.c:172:6:SX1276LoRaSetDefaults	8	static
+../Drivers/SX12xxDrivers-V2.1.0/src/radio/sx1276-Lora.c:179:6:SX1276LoRaSetRFState	16	static
+../Drivers/SX12xxDrivers-V2.1.0/src/radio/sx1276-Lora.c:184:9:SX1276LoRaReadRxGain	8	static

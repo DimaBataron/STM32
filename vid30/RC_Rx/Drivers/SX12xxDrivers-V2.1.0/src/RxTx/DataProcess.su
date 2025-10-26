@@ -1,0 +1,10 @@
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:45:10:WriteArrFIFO	16	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:61:6:InitTxLoRa	8	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:83:6:StartTxLoRa	8	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:98:6:TxInterHandl	8	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:106:6:InitRxContLoRa	8	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:151:6:RxContLoRaCmpl	16	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:198:6:RxParamCalc	16	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:220:6:CheckParam	16	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:235:6:TxRxArrFill	16	static
+D:/East23/Project/STM32BatLib/SX12xxDrivers-V2.1.0/src/RxTx/DataProcess.c:244:6:TxArrWriteFiFo	16	static

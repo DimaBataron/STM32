@@ -1,0 +1,11 @@
+../Core/Src/main.c:86:5:main	1
+../Core/Src/main.c:188:6:SystemClock_Config	3
+../Core/Src/main.c:228:13:MX_SPI1_Init	2
+../Core/Src/main.c:266:13:MX_TIM2_Init	5
+../Core/Src/main.c:319:13:MX_USART1_UART_Init	2
+../Core/Src/main.c:352:13:MX_GPIO_Init	1
+../Core/Src/main.c:439:6:StartLoRaRx	1
+../Core/Src/main.c:466:6:StartConsole	1
+../Core/Src/main.c:488:6:StartMotor1_2	1
+../Core/Src/main.c:527:6:StartUARTOut	5
+../Core/Src/main.c:568:6:Error_Handler	1

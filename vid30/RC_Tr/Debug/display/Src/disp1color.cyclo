@@ -1,0 +1,10 @@
+../display/Src/disp1color.c:39:6:disp1color_Init	2
+../display/Src/disp1color.c:55:6:disp1color_FillScreenbuff	2
+../display/Src/disp1color.c:68:9:disp1color_printf	1
+../display/Src/disp1color.c:84:9:disp1color_DrawString	6
+../display/Src/disp1color.c:114:9:disp1color_DrawString_Invert	6
+../display/Src/disp1color.c:148:9:disp1color_DrawChar	10
+../display/Src/disp1color.c:196:6:disp1color_DrawPixel	4
+../display/Src/disp1color.c:213:6:disp1color_DrawPixel_Invert	4
+../display/Src/disp1color.c:234:6:disp1color_UpdateFromBuff	1
+../display/Src/disp1color.c:238:6:HAL_I2C_MasterTxCpltCallback	7

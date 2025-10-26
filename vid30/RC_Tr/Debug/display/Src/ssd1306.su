@@ -1,0 +1,4 @@
+../display/Src/ssd1306.c:14:6:SSD1306_Init	16	static
+../display/Src/ssd1306.c:30:6:SSD1306_DisplayFullUpdate	16	static
+../display/Src/ssd1306.c:40:6:SSD1306_SendCOM	16	static
+../display/Src/ssd1306.c:51:6:SendData	16	static

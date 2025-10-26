@@ -1,0 +1,5 @@
+../Drivers/ChaeburatorIT_Proc/ChaeburatorIT_Proc.c:34:6:HAL_GPIO_EXTI_Callback	24	static,ignoring_inline_asm
+../Drivers/ChaeburatorIT_Proc/ChaeburatorIT_Proc.c:64:6:CalcRxCommands	8	static
+../Drivers/ChaeburatorIT_Proc/ChaeburatorIT_Proc.c:90:6:CheckRange	24	static
+../Drivers/ChaeburatorIT_Proc/ChaeburatorIT_Proc.c:149:6:ZeroCommArr	16	static
+../Drivers/ChaeburatorIT_Proc/ChaeburatorIT_Proc.c:163:9:CheckBatVolt	16	static

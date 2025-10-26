@@ -1,0 +1,15 @@
+../Drivers/console/console.c:37:13:validate_arg_def	16	static
+../Drivers/console/console.c:47:37:get_command	24	static
+../Drivers/console/console.c:56:13:write_str	16	static
+../Drivers/console/console.c:63:13:parse_arg	32	static
+../Drivers/console/console.c:83:17:get_num_required_args	24	static
+../Drivers/console/console.c:101:13:process_line	40	static
+../Drivers/console/console.c:201:13:reset_line_and_print_prompt	8	static
+../Drivers/console/console.c:213:13:push_char	16	static
+../Drivers/console/console.c:229:13:move_cursor_to_end	8	static
+../Drivers/console/console.c:237:13:erase_current_line	32	static
+../Drivers/console/console.c:326:13:help_command_handler	88	static
+../Drivers/console/console.c:404:6:console_init	16	static
+../Drivers/console/console.c:412:6:console_command_register	32	static
+../Drivers/console/console.c:435:6:console_process	48	static
+../Drivers/console/console.c:584:6:console_print_line	24	static
