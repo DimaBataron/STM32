@@ -1,0 +1,5 @@
+../Drivers/BrushedDC/BrushedDC.c:11:6:Brushed2DC_Control	32	static
+../Drivers/BrushedDC/BrushedDC.c:97:6:DC_Control	24	static
+../Drivers/BrushedDC/BrushedDC.c:154:6:Engine_Control	32	static
+../Drivers/BrushedDC/BrushedDC.c:166:6:Engine1_Control	24	static
+../Drivers/BrushedDC/BrushedDC.c:178:8:AccelerationIncr	16	static

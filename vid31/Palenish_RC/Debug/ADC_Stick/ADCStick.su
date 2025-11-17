@@ -1,0 +1,8 @@
+../ADC_Stick/ADCStick.c:30:6:InitADCStick	16	static
+../ADC_Stick/ADCStick.c:36:6:StickCal	24	static
+../ADC_Stick/ADCStick.c:50:6:StickCalc	24	static
+../ADC_Stick/ADCStick.c:76:6:HAL_ADC_ConvCpltCallback	16	static
+../ADC_Stick/ADCStick.c:82:7:BattCharge	16	static
+../ADC_Stick/ADCStick.c:86:6:BufFormCharge	16	static
+../ADC_Stick/ADCStick.c:93:6:BufFormStick	16	static
+../ADC_Stick/ADCStick.c:102:6:BufFormNumbConv	16	static

@@ -1,0 +1,3 @@
+../display/Src/font.c:25:10:font_GetFontStruct	16	static
+../display/Src/font.c:35:9:font_GetCharWidth	16	static
+../display/Src/font.c:45:9:font_GetCharHeight	16	static

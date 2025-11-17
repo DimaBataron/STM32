@@ -1,0 +1,4 @@
+../ProgMem/ProgMem.c:23:6:read_config_from_flash	24	static
+../ProgMem/ProgMem.c:31:19:write_config_to_flash	56	static
+../ProgMem/ProgMem.c:73:6:StartInitCalValues	72	static
+../ProgMem/ProgMem.c:98:19:ClearProgMem	88	static

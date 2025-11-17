@@ -1,0 +1,8 @@
+../LoRa_MenuV2/LoRaMenuV2.c:18:6:LoRaMenuInit	16	static
+../LoRa_MenuV2/LoRaMenuV2.c:35:6:printFreqMenu	40	static
+../LoRa_MenuV2/LoRaMenuV2.c:124:6:printPowerMenu	24	static
+../LoRa_MenuV2/LoRaMenuV2.c:184:6:printSignalBw	24	static
+../LoRa_MenuV2/LoRaMenuV2.c:245:6:printSfMenu	32	static
+../LoRa_MenuV2/LoRaMenuV2.c:307:6:printErrCod	24	static
+../LoRa_MenuV2/LoRaMenuV2.c:366:6:LoRaParamCalc	8	static
+../LoRa_MenuV2/LoRaMenuV2.c:385:10:checkParamRf	32	static

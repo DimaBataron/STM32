@@ -1,0 +1,7 @@
+../Drivers/SX12xxDrivers-V2.1.0/src/radio/sx1276-Hal.c:9:6:SX1276SetReset	16	static
+../Drivers/SX12xxDrivers-V2.1.0/src/radio/sx1276-Hal.c:22:6:SX1276Write	16	static
+../Drivers/SX12xxDrivers-V2.1.0/src/radio/sx1276-Hal.c:27:6:SX1276WriteBuffer	24	static
+../Drivers/SX12xxDrivers-V2.1.0/src/radio/sx1276-Hal.c:41:6:SX1276ReadBuffer	24	static
+../Drivers/SX12xxDrivers-V2.1.0/src/radio/sx1276-Hal.c:55:6:SX1276Read	16	static
+../Drivers/SX12xxDrivers-V2.1.0/src/radio/sx1276-Hal.c:60:6:SX1276ReadFifo	16	static
+../Drivers/SX12xxDrivers-V2.1.0/src/radio/sx1276-Hal.c:65:6:SX1276WriteFifo	16	static

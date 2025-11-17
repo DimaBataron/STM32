@@ -1,0 +1,8 @@
+../Drivers/UART_Output/UART_Output.c:16:14:TransArrayLayout	88	static
+../Drivers/UART_Output/UART_Output.c:76:14:MemReqString	32	static
+../Drivers/UART_Output/UART_Output.c:90:10:MemCpyStr	24	static
+../Drivers/UART_Output/UART_Output.c:102:6:OutStringTask	16	static
+../Drivers/UART_Output/UART_Output.c:119:6:OutDataRxLoRa	24	static
+../Drivers/UART_Output/UART_Output.c:137:6:OurServRotPerc	32	static
+../Drivers/UART_Output/UART_Output.c:153:6:NumRxPack	16	static
+../Drivers/UART_Output/UART_Output.c:165:6:OutMeasVal	24	static

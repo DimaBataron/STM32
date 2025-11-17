@@ -1,0 +1,17 @@
+../IT_Process_0.2.1/PalenishIT_Proc.c:69:19:IT_GPIO_Handl	16	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:97:6:HAL_GPIO_EXTI_Callback	16	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:102:19:MenuInit	4	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:117:19:PressHandl	24	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:139:6:PressContrKeys	16	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:197:6:NewPressState	16	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:394:19:MenuHandl	16	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:441:6:HAL_RTCEx_RTCEventCallback	16	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:455:6:NumPacSec	16	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:462:6:FormArrComm	8	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:510:19:LoRaInitTx	16	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:522:6:HAL_SPI_TxRxCpltCallback	16	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:540:18:CalcCalVal	88	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:577:6:CalibrStartInit	24	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:587:6:PrintCalibMaxMin	24	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:606:6:ClearCalValues	8	static
+../IT_Process_0.2.1/PalenishIT_Proc.c:622:8:CheckCalcVal	24	static

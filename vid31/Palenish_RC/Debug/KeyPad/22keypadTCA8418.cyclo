@@ -1,0 +1,4 @@
+../KeyPad/22keypadTCA8418.c:38:19:MatrixConfig8418	4
+../KeyPad/22keypadTCA8418.c:62:19:ReadFIFO	11
+../KeyPad/22keypadTCA8418.c:121:6:BufFormKey	3
+../KeyPad/22keypadTCA8418.c:139:6:PrintSymbASCII	3
